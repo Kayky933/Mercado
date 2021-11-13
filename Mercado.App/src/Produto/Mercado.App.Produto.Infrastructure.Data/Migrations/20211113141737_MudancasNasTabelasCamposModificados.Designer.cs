@@ -4,14 +4,16 @@ using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mercado.App.Produto.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ProdutoDbContext))]
-    partial class ProdutoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211113141737_MudancasNasTabelasCamposModificados")]
+    partial class MudancasNasTabelasCamposModificados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,18 +38,13 @@ namespace Mercado.App.Produto.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Mercado.App.Produto.Domain.Models.Prateleira.InfoProduto", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<decimal>("PrecoUnidade")
-                        .HasColumnType("decimal(12,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UnidadeMedida")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("PrecoUnidade");
 
                     b.ToTable("InfoProduto");
                 });
@@ -65,14 +62,14 @@ namespace Mercado.App.Produto.Infrastructure.Data.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Informacoes_ProdutoId")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("Informacoes_ProdutoPrecoUnidade")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("Informacoes_ProdutoId");
+                    b.HasIndex("Informacoes_ProdutoPrecoUnidade");
 
                     b.ToTable("PRODUTO");
                 });
@@ -87,7 +84,7 @@ namespace Mercado.App.Produto.Infrastructure.Data.Migrations
 
                     b.HasOne("Mercado.App.Produto.Domain.Models.Prateleira.InfoProduto", "Informacoes_Produto")
                         .WithMany()
-                        .HasForeignKey("Informacoes_ProdutoId");
+                        .HasForeignKey("Informacoes_ProdutoPrecoUnidade");
 
                     b.Navigation("Categoria");
 

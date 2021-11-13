@@ -4,11 +4,6 @@ using Mercado.App.Produto.Infrastructure.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.Infrastructure.Data.DatabaseRegistration
 {
@@ -21,7 +16,7 @@ namespace Mercado.App.Produto.Infrastructure.Data.DatabaseRegistration
             {
                 options.UseSqlServer(configuration.GetConnectionString("Sql_Connection"));
             });
-            services.AddScoped(typeof(IProdutoRepository<>), typeof(ProdutoRepository<>));
+            services.AddScoped(typeof(IProdutoRepository), typeof(ProdutoRepository));
             return services;
         }
     }
