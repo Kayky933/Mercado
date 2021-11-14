@@ -12,11 +12,11 @@ namespace Mercado.App.Produto.Validation.Validation.ValidationModels
                 .MinimumLength(3).WithMessage(ProdutoErrorMessages.DescricaoTamanhoMinimo)
                 .MaximumLength(100).WithMessage(ProdutoErrorMessages.DescricaoTamanhoMaximo);
 
-            RuleFor(x => x.Informacoes_Produto.PrecoUnidade).NotEmpty().WithMessage("x")
-                .Must(x => x.GetType() == typeof(decimal)).WithMessage("x");
+            RuleFor(x => x.PrecoUnidade).NotEmpty().WithMessage(ProdutoErrorMessages.PrecoUnidadeVazio)
+                .Must(x => x.GetType() == typeof(decimal)).WithMessage(ProdutoErrorMessages.PrecoUnidadeInvalido);
 
-            RuleFor(x => x.Informacoes_Produto.UnidadeMedida).NotEmpty().WithMessage("x")
-                .Must(x => x.GetType() == typeof(string)).WithMessage("x");
+            RuleFor(x => x.UnidadeMedida).NotEmpty().WithMessage(ProdutoErrorMessages.UnidadeMedidaVazia)
+                .Must(x => x.GetType() == typeof(UnidadeMedidaEnum)).WithMessage(ProdutoErrorMessages.UnidadeMedidaInvalida);
         }
     }
 }

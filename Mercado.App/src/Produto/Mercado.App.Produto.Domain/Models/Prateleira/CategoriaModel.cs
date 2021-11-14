@@ -10,6 +10,5 @@ namespace Mercado.App.Produto.Domain.Models.Prateleira
         [Key]
         public int Id { get; set; }
         public string Descricao { get; set; }
-        public ICollection<ProdutoModel> Produtos { get; set; } = default;
     }
 }
