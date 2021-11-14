@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
 using Mercado.App.Produto.Domain.Models.ViewModels;
 using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
@@ -10,101 +11,53 @@ using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Podutos")]
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly ProdutoDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IProdutoService _service;        
 
-        public ProdutoController(ProdutoDbContext context, IMapper mapper)
+        public ProdutoController(ProdutoDbContext context, IProdutoService service)
         {
-            _context = context;
-            _mapper = mapper;
+            _service = service;
         }
 
         // GET: api/Produto
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<ActionResult<IEnumerable<ProdutoModel>>> GetProdutos()
         {
-            return await _context.Produtos.ToListAsync();
+            return Ok(await _service.GetAllProducts());
         }
 
         // GET: api/Produto/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProdutoModel>> GetProdutoModel(int id)
         {
-            var produtoModel = await _context.Produtos.FindAsync(id);
-
-            if (produtoModel == null)
-            {
-                return NotFound();
-            }
-
-            return produtoModel;
+            return await _service.GetOneProductById(id);
         }
 
         // PUT: api/Produto/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProdutoModel(int id, ProdutoModel produtoModel)
-        {
-            if (id != produtoModel.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(produtoModel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProdutoModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+        public async Task<dynamic> PutProdutoModel(int id, ProdutoModel produtoModel)
+        {            
+            return await _service.PutProduct(id, produtoModel);
         }
 
         // POST: api/Produto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> PostProdutoModel(ProdutoModel produtoModel)
-        {
-            _context.Produtos.Add(produtoModel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProdutoModel", new { id = produtoModel.Id }, produtoModel);
+        public async Task<dynamic> PostProdutoModel(ProdutoViewModel produtoModel)
+        {           
+            var produtoNovo = await _service.CreateProduct(produtoModel);
+            return produtoNovo.GetType() == typeof(ProdutoModel) ? Ok(produtoNovo) : BadRequest(produtoNovo); 
         }
 
         // DELETE: api/Produto/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProdutoModel(int id)
+        public async Task<dynamic> DeleteProdutoModel(int id)
         {
-            var produtoModel = await _context.Produtos.FindAsync(id);
-            if (produtoModel == null)
-            {
-                return NotFound();
-            }
-
-            _context.Produtos.Remove(produtoModel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ProdutoModelExists(int id)
-        {
-            return _context.Produtos.Any(e => e.Id == id);
+            return _service.DeletProduct(id);
         }
     }
 }

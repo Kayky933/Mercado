@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Interfaces.Service
@@ -8,9 +7,8 @@ namespace Mercado.App.Produto.API.Interfaces.Service
     {
         public Task<IEnumerable<T>> GetAllProducts();
         public Task<T> GetOneProductById(int id);
-        public Task<IEnumerable<T>> GettAllProductBycategory(int id);
-        public Task<ValidationResult> CreateProduct(T produto);
-        public Task<ValidationResult> DeletProduct(int id);
-        public Task<ValidationResult> PutProduct(int id, T produto);
+        public Task<IEnumerable<object>> GettAllProductBycategory(int id);       
+        public Task<bool> DeletProduct(int id);
+        public Task<object> PutProduct(int id, T produto);
     }
 }

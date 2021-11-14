@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mercado.App.Produto.Infrastructure.Data.Repository
+namespace Mercado.App.entity.Infrastructure.Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
@@ -15,41 +15,42 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
         {
             _context = context;
         }
-        public void CreateProduct(ProdutoModel produto)
+
+        public void Create(ProdutoModel entity)
         {
-            _context.AddAsync(produto);
+            _context.Produtos.Add(entity);
             SaveChangesDb();
         }
 
-        public void DeletProduct(ProdutoModel produto)
+        public void Delete(ProdutoModel entity)
         {
-            _context.Produtos.Remove(produto);
+            _context.Produtos.Remove(entity);
+            SaveChangesDb();
+        }
+        public void Update(ProdutoModel entity)
+        {
+            _context.Update(entity).State = EntityState.Modified;
             SaveChangesDb();
         }
 
-        public async Task<IEnumerable<ProdutoModel>> GetAllProducts()
+        public async Task<IEnumerable<ProdutoModel>> GetAll()
         {
             return await _context.Produtos.ToListAsync();
         }
 
-        public async Task<ProdutoModel> GetOneProductById(int id)
-        {
-            return await _context.Produtos.Where(x => x.Id == id).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<ProdutoModel>> GettAllProductBycategory(int id)
+        public async Task<IEnumerable<ProdutoModel>> GetOneByCategoey(int id)
         {
             return await _context.Produtos.Where(x => x.CategoriaId == id).ToListAsync();
         }
 
-        public void PutProduct(ProdutoModel produto)
+        public async Task<ProdutoModel> GetOneById(int id)
         {
-            _context.Entry(produto).State = EntityState.Modified;
-            SaveChangesDb();
+            return await _context.Produtos.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
+
         public void SaveChangesDb()
         {
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
     }
