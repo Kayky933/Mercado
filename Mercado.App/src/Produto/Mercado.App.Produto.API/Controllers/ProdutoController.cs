@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
 using Mercado.App.Produto.Domain.Models.ViewModels;
 using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
@@ -15,12 +16,14 @@ namespace Mercado.App.Produto.API.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly ProdutoDbContext _context;
+        private readonly IProdutoService _service;
         private readonly IMapper _mapper;
 
-        public ProdutoController(ProdutoDbContext context, IMapper mapper)
+        public ProdutoController(ProdutoDbContext context, IMapper mapper, IProdutoService service)
         {
             _context = context;
             _mapper = mapper;
+            _service = service;
         }
 
         // GET: api/Produto
@@ -78,12 +81,10 @@ namespace Mercado.App.Produto.API.Controllers
         // POST: api/Produto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> PostProdutoModel(ProdutoModel produtoModel)
+        public async Task<dynamic> PostProdutoModel(ProdutoViewModel produtoModel)
         {
-            _context.Produtos.Add(produtoModel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProdutoModel", new { id = produtoModel.Id }, produtoModel);
+            var newProd = _mapper.Map<ProdutoModel>(produtoModel);
+            return await _service.CreateProduct(newProd);
         }
 
         // DELETE: api/Produto/5

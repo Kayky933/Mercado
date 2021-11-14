@@ -6,10 +6,10 @@
         public static string DescricaoTamanhoMaximo = "O campo Descrição tem tamanho máximo de 300 caracteres";
         public static string DescricaoTamanhoMinimo = "O campo Descrição tem tamanho mínimo de 3 caracteres";
 
-        public static string CategoriaVazia = "O campo Categoria não pode ser nulo";
-        public static string CategoriaTipoInvalido = "O campo Categoria não foi encontrato nos tipos existentes";
+        public static string PrecoUnidadeVazio = "O campo Preço não pode ser nulo";
+        public static string PrecoUnidadeInvalido = "O campo Preço esta em um formato inválido";
 
-        public static string EstoqueVazia = "O campo Estoque não pode ser nulo";
-        public static string EstoqueTipoInvalido = "O campo Estoque não foi encontrato nos tipos existentes";
+        public static string UnidadeMedidaVazia = "O campo Unidade de Medida não pode ser nulo";
+        public static string UnidademedidaInvalida = "O campo Unidade de Medida esta em um formato inválido";
     }
 }

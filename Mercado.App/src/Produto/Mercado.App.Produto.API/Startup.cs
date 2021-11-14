@@ -1,4 +1,6 @@
+using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.API.Mapper;
+using Mercado.App.Produto.API.Service;
 using Mercado.App.Produto.Infrastructure.Data.DatabaseRegistration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +29,10 @@ namespace Mercado.App.Produto.API
             services.AddDataRegistration(_configuration);
 
             services.AddAutoMapper(typeof(AutoMapperClass));
+
+            //services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IProdutoService, ProdutoService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
