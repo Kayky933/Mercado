@@ -9,7 +9,7 @@ namespace Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository
         void Update(T entity);
         void Delete(T entity);
         void SaveChangesDb();
-
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAllProdWithId();
+        Task<IEnumerable<object>> GetAll();
     }
 }

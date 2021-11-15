@@ -6,6 +6,7 @@ namespace Mercado.App.Produto.API.Interfaces.Service
 {
     public interface IProdutoService : IBaseService<ProdutoModel>
     {
-        public Task<object> CreateProduct(ProdutoViewModel produto);
+        Task<object> CreateProduct(ProdutoViewModel produto);
+        Task<object> PutProduct(int id, ProdutoViewModel produto);
     }
 }

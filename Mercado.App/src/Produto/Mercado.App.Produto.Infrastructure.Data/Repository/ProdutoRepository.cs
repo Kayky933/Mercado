@@ -16,9 +16,15 @@ namespace Mercado.App.entity.Infrastructure.Data.Repository
             _context = context;
         }
 
+        #region Post, Put, Delet, Save
         public void Create(ProdutoModel entity)
         {
             _context.Produtos.Add(entity);
+            SaveChangesDb();
+        }
+        public void Update(ProdutoModel entity)
+        {
+            _context.Produtos.Update(entity).State = EntityState.Modified;
             SaveChangesDb();
         }
 
@@ -27,20 +33,21 @@ namespace Mercado.App.entity.Infrastructure.Data.Repository
             _context.Produtos.Remove(entity);
             SaveChangesDb();
         }
-        public void Update(ProdutoModel entity)
+        public void SaveChangesDb()
         {
-            _context.Update(entity).State = EntityState.Modified;
-            SaveChangesDb();
+            _context.SaveChanges();
+        }
+        #endregion
+
+        #region Gets
+        public async Task<IEnumerable<object>> GetAll()
+        {
+            return await _context.Produtos.Select(x => new { x.Descricao, x.CategoriaId, x.PrecoUnidade, x.UnidadeMedida }).ToListAsync();
         }
 
-        public async Task<IEnumerable<ProdutoModel>> GetAll()
+        public async Task<IEnumerable<object>> GetOneByCategoey(int id)
         {
-            return await _context.Produtos.ToListAsync();
-        }
-
-        public async Task<IEnumerable<ProdutoModel>> GetOneByCategoey(int id)
-        {
-            return await _context.Produtos.Where(x => x.CategoriaId == id).ToListAsync();
+            return await _context.Produtos.Where(x => x.CategoriaId == id).Select(x => new { x.Descricao, x.CategoriaId, x.PrecoUnidade, x.UnidadeMedida }).ToListAsync();
         }
 
         public async Task<ProdutoModel> GetOneById(int id)
@@ -48,10 +55,10 @@ namespace Mercado.App.entity.Infrastructure.Data.Repository
             return await _context.Produtos.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public void SaveChangesDb()
+        public async Task<IEnumerable<ProdutoModel>> GetAllProdWithId()
         {
-            _context.SaveChanges();
+            return await _context.Produtos.ToListAsync();
         }
-
+        #endregion
     }
 }

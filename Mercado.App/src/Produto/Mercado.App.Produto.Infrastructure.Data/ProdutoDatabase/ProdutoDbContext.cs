@@ -10,6 +10,6 @@ namespace Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase
         {
         }
         public DbSet<ProdutoModel> Produtos { get; set; }
-        public DbSet<CategoriaModel> Categorias { get; set; }   
+        public DbSet<CategoriaModel> Categorias { get; set; }
     }
 }

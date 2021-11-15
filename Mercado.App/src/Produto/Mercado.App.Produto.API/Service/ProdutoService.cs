@@ -20,6 +20,8 @@ namespace Mercado.App.Produto.API.Service
             _repository = repository;
             _mapper = mapper;
         }
+
+        #region Post, Put, Delet
         public async Task<object> CreateProduct(ProdutoViewModel produto)
         {
             var prodMap = _mapper.Map<ProdutoModel>(produto);
@@ -32,7 +34,19 @@ namespace Mercado.App.Produto.API.Service
 
 
         }
+        public async Task<object> PutProduct(int id, ProdutoViewModel produto)
+        {
+            var putObject = _mapper.Map<ProdutoModel>(produto);
+            var validation = await new ProdutoModelValidation().ValidateAsync(putObject);
 
+            if (!validation.IsValid)
+                return MostrarErros(validation);
+
+            putObject.Id = id;
+            _repository.Update(putObject);
+            return putObject;
+
+        }
         public async Task<bool> DeletProduct(int id)
         {
             var produto = await _repository.GetOneById(id);
@@ -43,11 +57,22 @@ namespace Mercado.App.Produto.API.Service
             return true;
         }
 
-        public async Task<IEnumerable<ProdutoModel>> GetAllProducts()
+        #endregion
+
+        #region Gets
+        public async Task<IEnumerable<ProdutoModel>> GetAllProductsWithId()
+        {
+            return await _repository.GetAllProdWithId();
+        }
+
+        public async Task<IEnumerable<object>> GetAllProducts()
         {
             return await _repository.GetAll();
         }
-
+        public async Task<IEnumerable<ProdutoModel>> GetAllProdWithId()
+        {
+            return await _repository.GetAllProdWithId();
+        }
         public async Task<ProdutoModel> GetOneProductById(int id)
         {
             return await _repository.GetOneById(id);
@@ -57,18 +82,8 @@ namespace Mercado.App.Produto.API.Service
         {
             return await _repository.GetOneByCategoey(id);
         }
+        #endregion
 
-        public async Task<object> PutProduct(int id, ProdutoModel produto)
-        {
-            var validation = await new ProdutoModelValidation().ValidateAsync(produto);
-            if (!validation.IsValid)
-                return MostrarErros(validation);
-
-            _repository.Update(produto);
-            return produto;
-
-
-        }
         public object MostrarErros(ValidationResult res)
         {
             return res.Errors.Select(a => a.ErrorMessage).ToList();
