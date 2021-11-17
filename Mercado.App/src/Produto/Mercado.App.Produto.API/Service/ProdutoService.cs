@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using FluentValidation.Results;
 using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
 using Mercado.App.Produto.Domain.Models.ViewModels;
 using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
 using Mercado.App.Produto.Validation.Validation.ValidationModels;
+using Mercado.App.Produto.Validation.ValidationFunctions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Service
@@ -25,9 +24,9 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> CreateProduct(ProdutoViewModel produto)
         {
             var prodMap = _mapper.Map<ProdutoModel>(produto);
-            var validation = await new ProdutoModelValidation().ValidateAsync(prodMap);
+            var validation = await new ProdutoModelValidation(_repository).ValidateAsync(prodMap);
             if (!validation.IsValid)
-                return MostrarErros(validation);
+                return ErrorFunctions.MostrarErros(validation);
 
             _repository.Create(prodMap);
             return prodMap;
@@ -37,17 +36,17 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> PutProduct(int id, ProdutoViewModel produto)
         {
             var putObject = _mapper.Map<ProdutoModel>(produto);
-            var validation = await new ProdutoModelValidation().ValidateAsync(putObject);
+            var validation = await new ProdutoModelValidation(_repository).ValidateAsync(putObject);
 
             if (!validation.IsValid)
-                return MostrarErros(validation);
+                return ErrorFunctions.MostrarErros(validation);
 
             putObject.Id = id;
             _repository.Update(putObject);
             return putObject;
 
         }
-        public async Task<bool> DeletProduct(int id)
+        public async Task<bool> Delet(int id)
         {
             var produto = await _repository.GetOneById(id);
             if (produto == null)
@@ -60,33 +59,32 @@ namespace Mercado.App.Produto.API.Service
         #endregion
 
         #region Gets
-        public async Task<IEnumerable<ProdutoModel>> GetAllProductsWithId()
+        public async Task<IEnumerable<ProdutoModel>> GetAllWithId()
         {
-            return await _repository.GetAllProdWithId();
+            return await _repository.GetAllWithId();
         }
 
-        public async Task<IEnumerable<object>> GetAllProducts()
+        public async Task<IEnumerable<object>> GetAll()
         {
             return await _repository.GetAll();
         }
-        public async Task<IEnumerable<ProdutoModel>> GetAllProdWithId()
+
+        public async Task<IEnumerable<object>> GettAllProductsBycategory(int id)
         {
-            return await _repository.GetAllProdWithId();
+            return await _repository.GetOneByCategoey(id);
         }
-        public async Task<ProdutoModel> GetOneProductById(int id)
+
+        public async Task<ProdutoModel> GetOneById(int id)
         {
             return await _repository.GetOneById(id);
         }
 
-        public async Task<IEnumerable<object>> GettAllProductBycategory(int id)
+        public async Task<ProdutoModel> GetByDescriptionProduct(string description)
         {
-            return await _repository.GetOneByCategoey(id);
+            return await _repository.GetByDescriptionProduct(description);
         }
+
         #endregion
 
-        public object MostrarErros(ValidationResult res)
-        {
-            return res.Errors.Select(a => a.ErrorMessage).ToList();
-        }
     }
 }

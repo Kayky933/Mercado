@@ -1,12 +1,13 @@
 ﻿using Mercado.App.Produto.Domain.Models.Prateleira;
 using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
 using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mercado.App.entity.Infrastructure.Data.Repository
+namespace Mercado.App.Produto.Infrastructure.Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
@@ -33,6 +34,7 @@ namespace Mercado.App.entity.Infrastructure.Data.Repository
             _context.Produtos.Remove(entity);
             SaveChangesDb();
         }
+       
         public void SaveChangesDb()
         {
             _context.SaveChanges();
@@ -55,9 +57,14 @@ namespace Mercado.App.entity.Infrastructure.Data.Repository
             return await _context.Produtos.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ProdutoModel>> GetAllProdWithId()
+        public async Task<IEnumerable<ProdutoModel>> GetAllWithId()
         {
             return await _context.Produtos.ToListAsync();
+        }
+
+        public async Task<ProdutoModel> GetByDescriptionProduct(string description)
+        {
+            return await _context.Produtos.Where(x => x.Descricao.ToUpper().Trim() == description.ToUpper().Trim()).FirstOrDefaultAsync();
         }
         #endregion
     }

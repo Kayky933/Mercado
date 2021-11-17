@@ -19,30 +19,36 @@ namespace Mercado.App.Produto.API.Controllers
         }
 
         #region Gets
-        // GET: api/Produto
-        [HttpGet("GetAllProducts")]
-        public async Task<ActionResult<IEnumerable<ProdutoModel>>> GetProdutos()
+        [HttpGet("GetDescription")]
+        public async Task<ActionResult<ProdutoModel>> GetDescription(string description)
         {
-            return Ok(await _service.GetAllProducts());
+            return Ok(await _service.GetByDescriptionProduct(description));
         }
 
-        [HttpGet("GetAllProductsCode")]
+        // GET: api/Produto
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<IEnumerable<ProdutoModel>>> GetProdutos()
+        {
+            return Ok(await _service.GetAll());
+        }
+
+        [HttpGet("GetAllCode")]
         public async Task<ActionResult<IEnumerable<ProdutoModel>>> GetProdutosId()
         {
-            return Ok(await _service.GetAllProductsWithId());
+            return Ok(await _service.GetAllWithId());
         }
 
         [HttpGet("GetByCategory")]
         public async Task<ActionResult<IEnumerable<ProdutoModel>>> GetByCategory(int id)
         {
-            return Ok(await _service.GettAllProductBycategory(id));
+            return Ok(await _service.GettAllProductsBycategory(id));
         }
 
         // GET: api/Produto/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProdutoModel>> GetProdutoModel(int id)
         {
-            return await _service.GetOneProductById(id);
+            return await _service.GetOneById(id);
         }
         #endregion
 
@@ -62,7 +68,7 @@ namespace Mercado.App.Produto.API.Controllers
         public async Task<dynamic> PutProdutoModel(int id, ProdutoViewModel produtoModel)
         {
             var produtoModificado = await _service.PutProduct(id, produtoModel);
-            var verificationProd = _service.GetOneProductById(id);
+            var verificationProd = _service.GetOneById(id);
 
             if (verificationProd == null)
                 return NotFound("Produto não encontrado!");
@@ -74,7 +80,7 @@ namespace Mercado.App.Produto.API.Controllers
         [HttpDelete("{id}")]
         public async Task<dynamic> DeleteProdutoModel(int id)
         {
-            return await _service.DeletProduct(id);
+            return await _service.Delet(id);
         }
         #endregion
     }

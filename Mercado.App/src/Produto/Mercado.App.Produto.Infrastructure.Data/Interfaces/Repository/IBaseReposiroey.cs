@@ -9,7 +9,8 @@ namespace Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository
         void Update(T entity);
         void Delete(T entity);
         void SaveChangesDb();
-        Task<IEnumerable<T>> GetAllProdWithId();
+        Task<T> GetOneById(int id);
+        Task<IEnumerable<T>> GetAllWithId();
         Task<IEnumerable<object>> GetAll();
     }
 }
