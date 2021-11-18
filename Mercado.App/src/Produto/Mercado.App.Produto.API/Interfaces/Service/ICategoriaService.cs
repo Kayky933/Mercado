@@ -8,6 +8,6 @@ namespace Mercado.App.Produto.API.Interfaces.Service
     {
         Task<object> CreateCategory(CategoriaViewModel produto);
         Task<object> PutCategory(int id, CategoriaViewModel produto);
-        Task<CategoriaModel> GetByDescriptionCategory(string description);
+        Task<object> GetByDescriptionCategory(string description);
     }
 }

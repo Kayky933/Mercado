@@ -34,7 +34,17 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
             _context.Produtos.Remove(entity);
             SaveChangesDb();
         }
-       
+        public void DeletAll()
+        {
+            string StringCommand = "TRUNCATE TABLE PRODUTO";
+            var conn = new
+                   SqlConnection("Server=(localdb)\\mssqllocaldb;Database=ProdutoDb2;Trusted_Connection=True;MultipleActiveResultSets=true");
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(StringCommand, conn);
+            cmd.ExecuteNonQuery();
+        }
+
         public void SaveChangesDb()
         {
             _context.SaveChanges();
@@ -47,9 +57,12 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
             return await _context.Produtos.Select(x => new { x.Descricao, x.CategoriaId, x.PrecoUnidade, x.UnidadeMedida }).ToListAsync();
         }
 
-        public async Task<IEnumerable<object>> GetOneByCategoey(int id)
+        public async Task<IEnumerable<object>> GetAllByCategory(int id)
         {
-            return await _context.Produtos.Where(x => x.CategoriaId == id).Select(x => new { x.Descricao, x.CategoriaId, x.PrecoUnidade, x.UnidadeMedida }).ToListAsync();
+            var categorias = await _context.Produtos.Where(x => x.CategoriaId == id).Select(x => new { x.Descricao, x.CategoriaId, x.PrecoUnidade, x.UnidadeMedida }).ToListAsync();
+            if (categorias == null)
+                return null;
+            return categorias;
         }
 
         public async Task<ProdutoModel> GetOneById(int id)
@@ -65,6 +78,14 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
         public async Task<ProdutoModel> GetByDescriptionProduct(string description)
         {
             return await _context.Produtos.Where(x => x.Descricao.ToUpper().Trim() == description.ToUpper().Trim()).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> CategoryExists(int id)
+        {
+           var produtos = await _context.Produtos.AnyAsync(x => x.CategoriaId == id);
+            if (!produtos)
+                return false;
+            return true;
         }
         #endregion
     }

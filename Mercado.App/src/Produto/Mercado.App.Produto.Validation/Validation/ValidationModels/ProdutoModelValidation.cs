@@ -11,8 +11,7 @@ namespace Mercado.App.Produto.Validation.Validation.ValidationModels
         {
             RuleFor(x => x.Descricao).NotEmpty().WithMessage(ProdutoErrorMessages.DescricaoVazia)
                 .MinimumLength(3).WithMessage(ProdutoErrorMessages.DescricaoTamanhoMinimo)
-                .MaximumLength(100).WithMessage(ProdutoErrorMessages.DescricaoTamanhoMaximo)
-                 .Must(x => repository.GetByDescriptionProduct(x) == null).WithMessage(ProdutoErrorMessages.ProdutoExistente);
+                .MaximumLength(100).WithMessage(ProdutoErrorMessages.DescricaoTamanhoMaximo);
 
             RuleFor(x => x.PrecoUnidade).NotEmpty().WithMessage(ProdutoErrorMessages.PrecoUnidadeVazio)
                 .Must(x => x.GetType() == typeof(decimal)).WithMessage(ProdutoErrorMessages.PrecoUnidadeInvalido);

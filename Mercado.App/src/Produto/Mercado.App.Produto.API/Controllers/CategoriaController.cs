@@ -17,13 +17,19 @@ namespace Mercado.App.Produto.API.Controllers
         {
             _service = service;
         }
+
         #region Gets
         [HttpGet("GetDescription")]
         public async Task<ActionResult<CategoriaModel>> GetDescription(string description)
         {
-            return Ok(await _service.GetByDescriptionCategory(description));
+            var descricao = await _service.GetByDescriptionCategory(description);
+            return descricao.GetType()!=typeof(CategoriaModel)? BadRequest(descricao):Ok(descricao);
         }
-
+        [HttpGet("GetAllCategoryWithCode")]
+        public async Task<ActionResult<IEnumerable<CategoriaModel>>> GetCategorysId()
+        {
+            return Ok(await _service.GetAllWithId());
+        }
 
         // GET: api/Categoria
         [HttpGet]
@@ -67,9 +73,11 @@ namespace Mercado.App.Produto.API.Controllers
         [HttpDelete("{id}")]
         public async Task<dynamic> DeleteCategoriaModel(int id)
         {
-            return await _service.Delet(id);
+          var categoria = await _service.Delet(id);
+            if (categoria.GetType() != typeof(CategoriaModel))
+                return BadRequest(categoria);
+            return Ok(categoria);
         }
-       
         #endregion
     }
 }

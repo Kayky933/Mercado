@@ -82,6 +82,13 @@ namespace Mercado.App.Produto.API.Controllers
         {
             return await _service.Delet(id);
         }
+
+        [HttpDelete("DeleteAllProducts")]
+        public async Task<dynamic> DeleteAllProducts()
+        {
+            _service.DeletAll();
+            return Ok("Intidades deletadas com sucesso!");
+        }
         #endregion
     }
 }

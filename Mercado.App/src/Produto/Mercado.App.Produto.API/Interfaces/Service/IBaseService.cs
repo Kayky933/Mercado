@@ -8,7 +8,9 @@ namespace Mercado.App.Produto.API.Interfaces.Service
         Task<IEnumerable<object>> GetAll();
         Task<T> GetOneById(int id);
         Task<IEnumerable<T>> GetAllWithId();
-        Task<bool> Delet(int id);
+        Task<object> Delet(int id);
+
+        public void DeletAll();
 
     }
 }

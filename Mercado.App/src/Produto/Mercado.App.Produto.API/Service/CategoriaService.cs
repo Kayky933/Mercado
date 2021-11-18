@@ -6,6 +6,7 @@ using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
 using Mercado.App.Produto.Validation.Validation.ValidationModels;
 using Mercado.App.Produto.Validation.ValidationFunctions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Service
@@ -13,10 +14,12 @@ namespace Mercado.App.Produto.API.Service
     public class CategoriaService : ICategoriaService
     {
         private readonly ICategoriaRepository _repository;
+        private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
-        public CategoriaService(ICategoriaRepository repository, IMapper mapper)
+        public CategoriaService(ICategoriaRepository repository, IMapper mapper, IProdutoRepository produtoRepository)
         {
             _repository = repository;
+            _produtoRepository = produtoRepository;
             _mapper = mapper;
         }
 
@@ -43,14 +46,22 @@ namespace Mercado.App.Produto.API.Service
             _repository.Update(mappingModel);
             return mappingModel;
         }
-        public async Task<bool> Delet(int id)
+        public async Task<object> Delet(int id)
         {
             var category = await _repository.GetOneById(id);
+            
             if (category == null)
-                return false;
+                return "Categoria inexistente!";
+            var produtoRelacionado = await _produtoRepository.CategoryExists(category.Id);
+            if (produtoRelacionado)
+                return "A catedoria selecionada para a exclusão tem produtos vinculados a ela!";
 
             _repository.Delete(category);
-            return true;
+            return category;
+        }
+        public void DeletAll()
+        {
+            _repository.DeletAll();
         }
         #endregion
 
@@ -70,9 +81,12 @@ namespace Mercado.App.Produto.API.Service
             return await _repository.GetOneById(id);
         }
 
-        public async Task<CategoriaModel> GetByDescriptionCategory(string description)
+        public async Task<object> GetByDescriptionCategory(string description)
         {
-            return await _repository.GetByDescriptionCategory(description);
+            var descricao = await _repository.GetByDescriptionCategory(description);
+            if (descricao == null)
+                return "Categoria não encontrada!";
+            return descricao;
         }
 
         

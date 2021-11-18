@@ -34,7 +34,16 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
             _context.Categorias.Remove(entity);
             SaveChangesDb();
         }
-        
+        public void DeletAll()
+        {
+            string StringCommand = "TRUNCATE TABLE CATEGORIA";
+            var conn = new
+                   SqlConnection("Server=(localdb)\\mssqllocaldb;Database=ProdutoDb2;Trusted_Connection=True;MultipleActiveResultSets=true");
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand(StringCommand, conn);
+            cmd.ExecuteNonQuery();
+        }
         public void SaveChangesDb()
         {
             _context.SaveChanges();

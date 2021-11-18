@@ -46,14 +46,18 @@ namespace Mercado.App.Produto.API.Service
             return putObject;
 
         }
-        public async Task<bool> Delet(int id)
+        public async Task<object> Delet(int id)
         {
             var produto = await _repository.GetOneById(id);
             if (produto == null)
-                return false;
+                return "Produto inexistente!";
 
             _repository.Delete(produto);
-            return true;
+            return "Produto deletado com sucesso!";
+        }
+        public void DeletAll()
+        {
+            _repository.DeletAll();
         }
 
         #endregion
@@ -71,7 +75,7 @@ namespace Mercado.App.Produto.API.Service
 
         public async Task<IEnumerable<object>> GettAllProductsBycategory(int id)
         {
-            return await _repository.GetOneByCategoey(id);
+            return await _repository.GetAllByCategory(id);
         }
 
         public async Task<ProdutoModel> GetOneById(int id)
