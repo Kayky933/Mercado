@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
+using Mercado.App.Produto.Domain.Models.ViewModels;
 using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Controllers
 {
@@ -14,95 +12,72 @@ namespace Mercado.App.Produto.API.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ProdutoDbContext _context;
-
-        public CategoriaController(ProdutoDbContext context)
+        private readonly ICategoriaService _service;
+        public CategoriaController(ICategoriaService service)
         {
-            _context = context;
+            _service = service;
+        }
+
+        #region Gets
+        [HttpGet("GetDescription")]
+        public async Task<ActionResult<CategoriaModel>> GetDescription(string description)
+        {
+            var descricao = await _service.GetByDescriptionCategory(description);
+            return descricao.GetType()!=typeof(CategoriaModel)? BadRequest(descricao):Ok(descricao);
+        }
+        [HttpGet("GetAllCategoryWithCode")]
+        public async Task<ActionResult<IEnumerable<CategoriaModel>>> GetCategorysId()
+        {
+            return Ok(await _service.GetAllWithId());
         }
 
         // GET: api/Categoria
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoriaModel>>> GetCategorias()
         {
-            return await _context.Categorias.ToListAsync();
+            return Ok(await _service.GetAll());
         }
 
         // GET: api/Categoria/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoriaModel>> GetCategoriaModel(int id)
         {
-            var categoriaModel = await _context.Categorias.FindAsync(id);
+            return Ok(await _service.GetOneById(id));
+        }
+        #endregion
 
-            if (categoriaModel == null)
-            {
-                return NotFound();
-            }
-
-            return categoriaModel;
+        #region Post, put, delet
+        // POST: api/Categoria
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<CategoriaModel>> PostCategoriaModel(CategoriaViewModel categoriaModel)
+        {
+            var categoriaNovo = await _service.CreateCategory(categoriaModel);
+            return categoriaNovo.GetType() == typeof(CategoriaModel) ? Ok(categoriaNovo) : BadRequest(categoriaNovo);
         }
 
         // PUT: api/Categoria/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoriaModel(int id, CategoriaModel categoriaModel)
+        public async Task<IActionResult> PutCategoriaModel(int id, CategoriaViewModel categoriaModel)
         {
-            if (id != categoriaModel.Id)
-            {
-                return BadRequest();
-            }
+            var categoriaModificada = await _service.PutCategory(id, categoriaModel);
+            var verificationCategory = _service.GetOneById(id);
 
-            _context.Entry(categoriaModel).State = EntityState.Modified;
+            if (verificationCategory == null)
+                return NotFound("Categoria não encontrada!");
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoriaModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return categoriaModificada.GetType() == typeof(CategoriaModel) ? Ok(categoriaModificada) : BadRequest(categoriaModificada);
         }
-
-        // POST: api/Categoria
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CategoriaModel>> PostCategoriaModel(CategoriaModel categoriaModel)
-        {
-            _context.Categorias.Add(categoriaModel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategoriaModel", new { id = categoriaModel.Id }, categoriaModel);
-        }
-
         // DELETE: api/Categoria/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategoriaModel(int id)
+        public async Task<dynamic> DeleteCategoriaModel(int id)
         {
-            var categoriaModel = await _context.Categorias.FindAsync(id);
-            if (categoriaModel == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categorias.Remove(categoriaModel);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+          var categoria = await _service.Delet(id);
+            if (categoria.GetType() != typeof(CategoriaModel))
+                return BadRequest(categoria);
+            return Ok(categoria);
         }
-
-        private bool CategoriaModelExists(int id)
-        {
-            return _context.Categorias.Any(e => e.Id == id);
-        }
+        #endregion
     }
 }

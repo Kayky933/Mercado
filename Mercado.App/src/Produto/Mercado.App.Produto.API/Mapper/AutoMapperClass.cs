@@ -9,7 +9,8 @@ namespace Mercado.App.Produto.API.Mapper
         public AutoMapperClass()
         {
             CreateMap<ProdutoViewModel, ProdutoModel>();
-            CreateMap<ProdutoModel, ProdutoViewModel>();
+            //  CreateMap<ProdutoModel, ProdutoViewModel>();
+            CreateMap<CategoriaViewModel, CategoriaModel>();
         }
     }
 }

@@ -6,7 +6,8 @@ namespace Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository
 {
     public interface IProdutoRepository : IBaseReposiroey<ProdutoModel>
     {
-        Task<ProdutoModel> GetOneById(int id);
-        Task<IEnumerable<ProdutoModel>> GetOneByCategoey(int id);
+        Task<IEnumerable<object>> GetAllByCategory(int id);
+        Task<bool> CategoryExists(int id);
+        Task<ProdutoModel> GetByDescriptionProduct(string description);
     }
 }

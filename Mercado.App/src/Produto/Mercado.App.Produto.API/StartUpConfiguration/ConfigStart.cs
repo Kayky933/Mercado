@@ -1,14 +1,9 @@
-﻿using Mercado.App.entity.Infrastructure.Data.Repository;
-using Mercado.App.Produto.API.Interfaces.Service;
+﻿using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.API.Mapper;
 using Mercado.App.Produto.API.Service;
-using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.StartUpConfiguration
 {
@@ -36,8 +31,8 @@ namespace Mercado.App.Produto.API.StartUpConfiguration
 
         public static void ConfigInterfaces(IServiceCollection services)
         {
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
         }
         public static void ConfigAutoMapper(IServiceCollection services)
         {

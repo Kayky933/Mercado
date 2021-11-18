@@ -10,5 +10,7 @@ namespace Mercado.App.Produto.Domain.Models.Prateleira
         [Key]
         public int Id { get; set; }
         public string Descricao { get; set; }
+        [ScaffoldColumn(false)]
+        public ICollection<ProdutoModel> Produtos { get; set; }
     }
 }

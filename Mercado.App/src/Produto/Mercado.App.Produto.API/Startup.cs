@@ -1,19 +1,10 @@
-using Mercado.App.entity.Infrastructure.Data.Repository;
-using Mercado.App.Produto.API.Interfaces.Service;
-using Mercado.App.Produto.API.Mapper;
-using Mercado.App.Produto.API.Service;
 using Mercado.App.Produto.API.StartUpConfiguration;
-using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
-using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
+using Mercado.App.Produto.Infrastructure.Data.ConectionData;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System;
 
 namespace Mercado.App.Produto.API
 {
@@ -33,8 +24,7 @@ namespace Mercado.App.Produto.API
             ConfigStart.ConfigCors(services);
             ConfigStart.ConfigAutoMapper(services);
 
-            services.AddDbContext<ProdutoDbContext>(options =>
-                  options.UseSqlServer(Configuration.GetConnectionString("Sql_Connection")));
+            services.AddConnectionDataBase(Configuration);
 
             ConfigStart.ConfigInterfaces(services);
             ConfigStart.SwaggerConfig(services);
