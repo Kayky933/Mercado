@@ -1,5 +1,5 @@
 ﻿using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

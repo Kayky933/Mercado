@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mercado.App.Produto.Domain.Models.Prateleira
 {
-    [Table("PRODUTO")]
+    [Table("PRODUTOS")]
     public class ProdutoModel
     {
         [Key]

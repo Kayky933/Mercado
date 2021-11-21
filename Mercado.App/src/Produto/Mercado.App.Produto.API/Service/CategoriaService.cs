@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
-using Mercado.App.Produto.Validation.Validation.ValidationModels;
 using Mercado.App.Produto.Validation.ValidationFunctions;
+using Mercado.App.Produto.Validation.ValidationProject.ValidationModels;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mercado.App.Produto.API.Service
@@ -27,7 +26,7 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> CreateCategory(CategoriaViewModel produto)
         {
             var mappingModel = _mapper.Map<CategoriaModel>(produto);
-            var validation = await new CategoriaModelValidation(_repository).ValidateAsync(mappingModel);
+            var validation = await new CategoriaModelValidation().ValidateAsync(mappingModel);
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
 
@@ -38,7 +37,7 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> PutCategory(int id, CategoriaViewModel produto)
         {
             var mappingModel = _mapper.Map<CategoriaModel>(produto);
-            var validation = await new CategoriaModelValidation(_repository).ValidateAsync(mappingModel);
+            var validation = await new CategoriaModelValidation().ValidateAsync(mappingModel);
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
 
@@ -49,7 +48,7 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> Delet(int id)
         {
             var category = await _repository.GetOneById(id);
-            
+
             if (category == null)
                 return "Categoria inexistente!";
             var produtoRelacionado = await _produtoRepository.CategoryExists(category.Id);
@@ -89,7 +88,7 @@ namespace Mercado.App.Produto.API.Service
             return descricao;
         }
 
-        
+
         #endregion
     }
 }

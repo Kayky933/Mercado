@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Infrastructure.Data", "src\Produto\Mercado.App.Produto.Infrastructure.Data\Mercado.App.Produto.Infrastructure.Data.csproj", "{33A2876A-6444-4122-8234-3A7A3CCA97B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.App.Produto.Validation", "src\Produto\Mercado.App.Produto.Validation\Mercado.App.Produto.Validation.csproj", "{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Validation", "src\Produto\Mercado.App.Produto.Validation\Mercado.App.Produto.Validation.csproj", "{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.App.UnitTests", "Mercado.App.UnitTests\Mercado.App.UnitTests.csproj", "{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

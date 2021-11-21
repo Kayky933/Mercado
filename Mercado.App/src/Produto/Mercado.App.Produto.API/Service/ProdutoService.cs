@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
-using Mercado.App.Produto.Validation.Validation.ValidationModels;
 using Mercado.App.Produto.Validation.ValidationFunctions;
+using Mercado.App.Produto.Validation.ValidationProject.ValidationModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,19 +24,18 @@ namespace Mercado.App.Produto.API.Service
         public async Task<object> CreateProduct(ProdutoViewModel produto)
         {
             var prodMap = _mapper.Map<ProdutoModel>(produto);
-            var validation = await new ProdutoModelValidation(_repository).ValidateAsync(prodMap);
+            var validation = await new ProdutoModelValidation().ValidateAsync(prodMap);
+
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
 
             _repository.Create(prodMap);
             return prodMap;
-
-
         }
         public async Task<object> PutProduct(int id, ProdutoViewModel produto)
         {
             var putObject = _mapper.Map<ProdutoModel>(produto);
-            var validation = await new ProdutoModelValidation(_repository).ValidateAsync(putObject);
+            var validation = await new ProdutoModelValidation().ValidateAsync(putObject);
 
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
@@ -44,7 +43,6 @@ namespace Mercado.App.Produto.API.Service
             putObject.Id = id;
             _repository.Update(putObject);
             return putObject;
-
         }
         public async Task<object> Delet(int id)
         {

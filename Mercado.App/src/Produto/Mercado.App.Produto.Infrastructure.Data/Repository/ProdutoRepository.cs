@@ -3,6 +3,7 @@ using Mercado.App.Produto.Infrastructure.Data.Interfaces.Repository;
 using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +13,11 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
     public class ProdutoRepository : IProdutoRepository
     {
         private readonly ProdutoDbContext _context;
-        public ProdutoRepository(ProdutoDbContext context)
+        private readonly IConfiguration _configuration;
+        public ProdutoRepository(ProdutoDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         #region Post, Put, Delet, Save
@@ -38,7 +41,7 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
         {
             string StringCommand = "TRUNCATE TABLE PRODUTO";
             var conn = new
-                   SqlConnection("Server=(localdb)\\mssqllocaldb;Database=ProdutoDb2;Trusted_Connection=True;MultipleActiveResultSets=true");
+                   SqlConnection(_configuration.GetConnectionString("Sql_Connection"));
             conn.Open();
 
             SqlCommand cmd = new SqlCommand(StringCommand, conn);
@@ -82,7 +85,7 @@ namespace Mercado.App.Produto.Infrastructure.Data.Repository
 
         public async Task<bool> CategoryExists(int id)
         {
-           var produtos = await _context.Produtos.AnyAsync(x => x.CategoriaId == id);
+            var produtos = await _context.Produtos.AnyAsync(x => x.CategoriaId == id);
             if (!produtos)
                 return false;
             return true;

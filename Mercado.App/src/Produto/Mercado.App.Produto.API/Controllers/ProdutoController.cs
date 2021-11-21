@@ -1,6 +1,6 @@
 ﻿using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -84,7 +84,7 @@ namespace Mercado.App.Produto.API.Controllers
         }
 
         [HttpDelete("DeleteAllProducts")]
-        public async Task<dynamic> DeleteAllProducts()
+        public IActionResult DeleteAllProducts()
         {
             _service.DeletAll();
             return Ok("Intidades deletadas com sucesso!");

@@ -1,4 +1,5 @@
 ﻿using Mercado.App.Produto.Domain.Models.Prateleira;
+using Mercado.App.Produto.Domain.Models.Venda;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase
@@ -21,5 +22,6 @@ namespace Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase
         }
         public DbSet<ProdutoModel> Produtos { get; set; }
         public DbSet<CategoriaModel> Categorias { get; set; }
+        public DbSet<VendaModel> Vendas { get; set; }
     }
 }

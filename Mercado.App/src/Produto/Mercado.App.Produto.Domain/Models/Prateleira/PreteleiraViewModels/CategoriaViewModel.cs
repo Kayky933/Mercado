@@ -1,4 +1,4 @@
-﻿namespace Mercado.App.Produto.Domain.Models.ViewModels
+﻿namespace Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels
 {
     public class CategoriaViewModel
     {
