@@ -1,7 +1,6 @@
 ﻿using Mercado.App.Produto.API.Interfaces.Service;
 using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
-using Mercado.App.Produto.Infrastructure.Data.ProdutoDatabase;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace Mercado.App.Produto.API.Controllers
         public async Task<ActionResult<CategoriaModel>> GetDescription(string description)
         {
             var descricao = await _service.GetByDescriptionCategory(description);
-            return descricao.GetType()!=typeof(CategoriaModel)? BadRequest(descricao):Ok(descricao);
+            return descricao.GetType() != typeof(CategoriaModel) ? BadRequest(descricao) : Ok(descricao);
         }
         [HttpGet("GetAllCategoryWithCode")]
         public async Task<ActionResult<IEnumerable<CategoriaModel>>> GetCategorysId()
@@ -73,7 +72,7 @@ namespace Mercado.App.Produto.API.Controllers
         [HttpDelete("{id}")]
         public async Task<dynamic> DeleteCategoriaModel(int id)
         {
-          var categoria = await _service.Delet(id);
+            var categoria = await _service.Delet(id);
             if (categoria.GetType() != typeof(CategoriaModel))
                 return BadRequest(categoria);
             return Ok(categoria);

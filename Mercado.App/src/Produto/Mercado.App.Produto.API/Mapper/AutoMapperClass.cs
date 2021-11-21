@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Mercado.App.Produto.Domain.Models.Prateleira;
-using Mercado.App.Produto.Domain.Models.ViewModels;
+using Mercado.App.Produto.Domain.Models.Prateleira.PrateleiraViewModels;
 
 namespace Mercado.App.Produto.API.Mapper
 {
@@ -9,7 +9,6 @@ namespace Mercado.App.Produto.API.Mapper
         public AutoMapperClass()
         {
             CreateMap<ProdutoViewModel, ProdutoModel>();
-            //  CreateMap<ProdutoModel, ProdutoViewModel>();
             CreateMap<CategoriaViewModel, CategoriaModel>();
         }
     }
