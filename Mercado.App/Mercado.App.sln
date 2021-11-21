@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.API", "src\Produto\Mercado.App.Produto.API\Mercado.App.Produto.API.csproj", "{146B3A08-C810-4B24-AF58-00714491CCDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.API", "src\Mercado.App.API\Mercado.App.API.csproj", "{2B9A0DDE-AD55-4A91-A098-46FDF1C8CC4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Domain", "src\Produto\Mercado.App.Produto.Domain\Mercado.App.Produto.Domain.csproj", "{6BB2CF37-BE0E-4185-A0A0-3CC5DECD3419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Domain", "src\Mercado.App.Domain\Mercado.App.Domain.csproj", "{D6B645C9-685B-4011-B8F8-153580E9D331}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Infrastructure.Data", "src\Produto\Mercado.App.Produto.Infrastructure.Data\Mercado.App.Produto.Infrastructure.Data.csproj", "{33A2876A-6444-4122-8234-3A7A3CCA97B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Infrastructure.Data", "src\Mercado.App.Infrastructure.Data\Mercado.App.Infrastructure.Data.csproj", "{8E9EDC1C-726F-4D2C-9F74-984F6D290381}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Produto.Validation", "src\Produto\Mercado.App.Produto.Validation\Mercado.App.Produto.Validation.csproj", "{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.UnitTests", "src\Mercado.App.UnitTests\Mercado.App.UnitTests.csproj", "{92A92552-3B1A-4A4A-9525-F50C7072E178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercado.App.UnitTests", "Mercado.App.UnitTests\Mercado.App.UnitTests.csproj", "{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercado.App.Validation", "src\Mercado.App.Validation\Mercado.App.Validation.csproj", "{03D9A763-8C25-4585-92B6-2EDE1BACBF77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{146B3A08-C810-4B24-AF58-00714491CCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{146B3A08-C810-4B24-AF58-00714491CCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{146B3A08-C810-4B24-AF58-00714491CCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{146B3A08-C810-4B24-AF58-00714491CCDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BB2CF37-BE0E-4185-A0A0-3CC5DECD3419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BB2CF37-BE0E-4185-A0A0-3CC5DECD3419}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BB2CF37-BE0E-4185-A0A0-3CC5DECD3419}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BB2CF37-BE0E-4185-A0A0-3CC5DECD3419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33A2876A-6444-4122-8234-3A7A3CCA97B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33A2876A-6444-4122-8234-3A7A3CCA97B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33A2876A-6444-4122-8234-3A7A3CCA97B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33A2876A-6444-4122-8234-3A7A3CCA97B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45AD1881-71C4-4EDE-AC32-CBEF2825C53E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE2DDEEF-5542-4892-81A5-4357A0D5CBD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B9A0DDE-AD55-4A91-A098-46FDF1C8CC4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9A0DDE-AD55-4A91-A098-46FDF1C8CC4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9A0DDE-AD55-4A91-A098-46FDF1C8CC4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9A0DDE-AD55-4A91-A098-46FDF1C8CC4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B645C9-685B-4011-B8F8-153580E9D331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B645C9-685B-4011-B8F8-153580E9D331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B645C9-685B-4011-B8F8-153580E9D331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B645C9-685B-4011-B8F8-153580E9D331}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9EDC1C-726F-4D2C-9F74-984F6D290381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9EDC1C-726F-4D2C-9F74-984F6D290381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9EDC1C-726F-4D2C-9F74-984F6D290381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9EDC1C-726F-4D2C-9F74-984F6D290381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A92552-3B1A-4A4A-9525-F50C7072E178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A92552-3B1A-4A4A-9525-F50C7072E178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A92552-3B1A-4A4A-9525-F50C7072E178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A92552-3B1A-4A4A-9525-F50C7072E178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D9A763-8C25-4585-92B6-2EDE1BACBF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D9A763-8C25-4585-92B6-2EDE1BACBF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D9A763-8C25-4585-92B6-2EDE1BACBF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D9A763-8C25-4585-92B6-2EDE1BACBF77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
