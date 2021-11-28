@@ -4,5 +4,6 @@
     {
         public int Quantidade { get; set; }
         public int IdProduto { get; set; }
+        private decimal ValorPago { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Mercado.App.Infrastructure.Data.ConectionData
 
             services.AddScoped(typeof(IProdutoRepository), typeof(ProdutoRepository));
             services.AddScoped(typeof(ICategoriaRepository), typeof(CategoriaRepository));
+            services.AddScoped(typeof(IVendaRepository), typeof(VendaRepository));
             return services;
 
         }

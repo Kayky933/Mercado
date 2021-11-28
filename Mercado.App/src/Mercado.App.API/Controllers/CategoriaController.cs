@@ -22,7 +22,10 @@ namespace Mercado.App.API.Controllers
         public async Task<ActionResult<CategoriaModel>> GetDescription(string description)
         {
             var descricao = await _service.GetByDescriptionCategory(description);
-            return descricao.GetType() != typeof(CategoriaModel) ? BadRequest(descricao) : Ok(descricao);
+            if (descricao.GetType() != typeof(CategoriaModel))
+                return BadRequest(descricao);
+
+            return Ok(descricao);
         }
         [HttpGet("GetAllCategoryWithCode")]
         public async Task<ActionResult<IEnumerable<CategoriaModel>>> GetCategorysId()
@@ -52,13 +55,16 @@ namespace Mercado.App.API.Controllers
         public async Task<ActionResult<CategoriaModel>> PostCategoriaModel(CategoriaViewModel categoriaModel)
         {
             var categoriaNovo = await _service.CreateCategory(categoriaModel);
-            return categoriaNovo.GetType() == typeof(CategoriaModel) ? Ok(categoriaNovo) : BadRequest(categoriaNovo);
+            if (categoriaNovo.GetType() == typeof(CategoriaModel))
+                return Ok(categoriaNovo);
+
+            return BadRequest(categoriaNovo);
         }
 
         // PUT: api/Categoria/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoriaModel(int id, CategoriaViewModel categoriaModel)
+        public async Task<dynamic> PutCategoriaModel(int id, CategoriaViewModel categoriaModel)
         {
             var categoriaModificada = await _service.PutCategory(id, categoriaModel);
             var verificationCategory = _service.GetOneById(id);
@@ -66,7 +72,10 @@ namespace Mercado.App.API.Controllers
             if (verificationCategory == null)
                 return NotFound("Categoria não encontrada!");
 
-            return categoriaModificada.GetType() == typeof(CategoriaModel) ? Ok(categoriaModificada) : BadRequest(categoriaModificada);
+            if (categoriaModificada.GetType() == typeof(CategoriaModel))
+                return Ok(categoriaModificada);
+
+            return BadRequest(categoriaModificada);
         }
         // DELETE: api/Categoria/5
         [HttpDelete("{id}")]

@@ -33,6 +33,7 @@ namespace Mercado.App.API.StartUpConfiguration
         {
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<IVendaService, VendaService>();
         }
         public static void ConfigAutoMapper(IServiceCollection services)
         {

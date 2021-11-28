@@ -1,9 +1,9 @@
-﻿using Mercado.App.Domain.Models.Venda;
+﻿using Mercado.App.API.Interfaces.Service;
+using Mercado.App.Domain.Models.Venda;
+using Mercado.App.Domain.Models.Venda.VendaViewModels;
 using Mercado.App.Infrastructure.Data.ProdutoDatabase;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mercado.App.API.Controllers
@@ -12,95 +12,76 @@ namespace Mercado.App.API.Controllers
     [ApiController]
     public class VendaController : ControllerBase
     {
-        private readonly ProdutoDbContext _context;
+        private readonly IVendaService _service;
 
-        public VendaController(ProdutoDbContext context)
+        public VendaController(ProdutoDbContext context, IVendaService service)
         {
-            _context = context;
+            _service = service;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<VendaModel>>> GetAllWithCode()
+        {
+            return Ok(await _service.GetAllWithId());
         }
 
         // GET: api/Venda
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VendaModel>>> GetVendas()
         {
-            return await _context.Vendas.ToListAsync();
+            return Ok(await _service.GetAll());
         }
 
         // GET: api/Venda/5
         [HttpGet("{id}")]
         public async Task<ActionResult<VendaModel>> GetVendaModel(int id)
         {
-            var vendaModel = await _context.Vendas.FindAsync(id);
-
-            if (vendaModel == null)
-            {
-                return NotFound();
-            }
-
-            return vendaModel;
+            var venda = await _service.GetOneById(id);
+            if (venda.GetType() != typeof(VendaModel))
+                NotFound("Venda não encontrado");
+            return Ok(venda);
         }
 
         // PUT: api/Venda/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVendaModel(int id, VendaModel vendaModel)
+        public async Task<dynamic> PutVendaModel(int id, VendaViewModel vendaModel)
         {
-            if (id != vendaModel.Id)
-            {
-                return BadRequest();
-            }
+            var venda = await _service.GetOneById(id);
+            var vendaPut = await _service.PutVenda(id, vendaModel);
+            if (venda == null)
+                return NotFound("Venda não encontrado!");
 
-            _context.Entry(vendaModel).State = EntityState.Modified;
+            if (vendaPut.GetType() == typeof(VendaModel))
+                return Ok(vendaPut);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VendaModelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return BadRequest(vendaPut);
         }
 
         // POST: api/Venda
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<VendaModel>> PostVendaModel(VendaModel vendaModel)
+        public async Task<ActionResult<dynamic>> PostVendaModel(VendaViewModel vendaModel)
         {
-            _context.Vendas.Add(vendaModel);
-            await _context.SaveChangesAsync();
+            var vendaCriada = await _service.CreateVenda(vendaModel);
+            if (vendaCriada.GetType() == typeof(VendaModel))
+                return Ok(vendaCriada);
 
-            return CreatedAtAction("GetVendaModel", new { id = vendaModel.Id }, vendaModel);
+            return BadRequest(vendaCriada);
         }
 
         // DELETE: api/Venda/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVendaModel(int id)
         {
-            var vendaModel = await _context.Vendas.FindAsync(id);
+            var vendaModel = await _service.GetOneById(id);
             if (vendaModel == null)
             {
                 return NotFound();
             }
-
-            _context.Vendas.Remove(vendaModel);
-            await _context.SaveChangesAsync();
-
+            await _service.Delet(id);
             return NoContent();
         }
 
-        private bool VendaModelExists(int id)
-        {
-            return _context.Vendas.Any(e => e.Id == id);
-        }
     }
 }

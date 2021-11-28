@@ -1,6 +1,7 @@
 ﻿using Mercado.App.Domain.Models.Prateleira;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Mercado.App.Domain.Models.Venda
 {
@@ -13,11 +14,9 @@ namespace Mercado.App.Domain.Models.Venda
         public int Quantidade { get; set; }
         [ForeignKey("Produto")]
         public int IdProduto { get; set; }
+        [JsonIgnore]
         public ProdutoModel Produto { get; set; }
-        public decimal Valor()
-        {
-            var valor = 0m;
-            return valor += Produto.PrecoUnidade * Quantidade;
-        }
+        [Column(TypeName = "decimal(12,2)")]
+        public decimal ValorPago { get; set; }
     }
 }

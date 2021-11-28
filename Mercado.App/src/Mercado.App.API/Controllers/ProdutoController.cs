@@ -59,7 +59,9 @@ namespace Mercado.App.API.Controllers
         public async Task<dynamic> PostProdutoModel(ProdutoViewModel produtoModel)
         {
             var produtoNovo = await _service.CreateProduct(produtoModel);
-            return produtoNovo.GetType() == typeof(ProdutoModel) ? Ok(produtoNovo) : BadRequest(produtoNovo);
+            if (produtoNovo.GetType() == typeof(ProdutoModel))
+                return Ok(produtoNovo);
+            return BadRequest(produtoNovo);
         }
 
         // PUT: api/Produto/5
@@ -73,7 +75,10 @@ namespace Mercado.App.API.Controllers
             if (verificationProd == null)
                 return NotFound("Produto não encontrado!");
 
-            return produtoModificado.GetType() == typeof(ProdutoModel) ? Ok(produtoModificado) : BadRequest(produtoModificado);
+            if (produtoModificado.GetType() == typeof(ProdutoModel))
+                return Ok(produtoModificado);
+
+            return BadRequest(produtoModificado);
         }
 
         // DELETE: api/Produto/5

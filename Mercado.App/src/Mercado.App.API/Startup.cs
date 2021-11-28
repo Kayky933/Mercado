@@ -21,6 +21,7 @@ namespace Mercado.App.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             ConfigStart.ConfigCors(services);
             ConfigStart.ConfigAutoMapper(services);
 

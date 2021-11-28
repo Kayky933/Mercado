@@ -3,14 +3,16 @@ using Mercado.App.Infrastructure.Data.ProdutoDatabase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mercado.App.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ProdutoDbContext))]
-    partial class ProdutoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211128195956_TesteDeMudancaDeCamposVenda")]
+    partial class TesteDeMudancaDeCamposVenda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,9 +73,6 @@ namespace Mercado.App.Infrastructure.Data.Migrations
 
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("ValorPago")
-                        .HasColumnType("decimal(12,2)");
 
                     b.HasKey("Id");
 
