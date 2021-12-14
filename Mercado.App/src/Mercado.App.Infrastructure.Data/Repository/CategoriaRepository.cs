@@ -59,6 +59,11 @@ namespace Mercado.App.Infrastructure.Data.Repository
         {
             return await _context.Categorias.Where(x => x.Descricao.ToUpper().Trim() == description.ToUpper().Trim()).FirstOrDefaultAsync();
         }
+
+        public async Task<CategoriaModel> GetCategoryById(int id)
+        {
+            return await _context.Categorias.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
         #endregion
     }
 }

@@ -14,7 +14,7 @@ namespace Mercado.App.API.Service
     {
         private readonly IProdutoRepository _repository;
         private readonly IMapper _mapper;
-        public ProdutoService(IProdutoRepository repository, IMapper mapper)
+        public ProdutoService(IProdutoRepository repository, ICategoriaRepository categoriaRepository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -25,7 +25,6 @@ namespace Mercado.App.API.Service
         {
             var prodMap = _mapper.Map<ProdutoModel>(produto);
             var validation = await new ProdutoModelValidation().ValidateAsync(prodMap);
-
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
 

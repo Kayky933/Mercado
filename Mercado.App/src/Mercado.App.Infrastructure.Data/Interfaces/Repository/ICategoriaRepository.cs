@@ -6,5 +6,6 @@ namespace Mercado.App.Infrastructure.Data.Interfaces.Repository
     public interface ICategoriaRepository : IBaseReposiroey<CategoriaModel>
     {
         Task<CategoriaModel> GetByDescriptionCategory(string description);
+        Task<CategoriaModel> GetCategoryById(int id);
     }
 }

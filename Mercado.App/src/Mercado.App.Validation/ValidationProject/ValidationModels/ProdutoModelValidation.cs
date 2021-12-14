@@ -13,7 +13,7 @@ namespace Mercado.App.Validation.ValidationProject.ValidationModels
                 .MaximumLength(100).WithMessage(DefaultErrorMessages.DescricaoTamanhoMaximo);
 
             RuleFor(x => x.CategoriaId).NotEmpty().WithMessage(ProdutoErrorMessages.CategoriaIvalida)
-                .GreaterThanOrEqualTo(1).WithMessage(ProdutoErrorMessages.CategoriaInexixtente);
+                .Must(x => x.GetType() == typeof(int)).WithMessage(ProdutoErrorMessages.CategoriaInexixtente);
 
             RuleFor(x => x.PrecoUnidade).NotEmpty().WithMessage(ProdutoErrorMessages.PrecoUnidadeVazio)
                 .GreaterThanOrEqualTo(0.99M).WithMessage(ProdutoErrorMessages.PrecoMinimo)

@@ -19,14 +19,14 @@ namespace Mercado.App.API.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllWithCode")]
         public async Task<ActionResult<IEnumerable<VendaModel>>> GetAllWithCode()
         {
             return Ok(await _service.GetAllWithId());
         }
 
         // GET: api/Venda
-        [HttpGet]
+        [HttpGet("GetAllVendas")]
         public async Task<ActionResult<IEnumerable<VendaModel>>> GetVendas()
         {
             return Ok(await _service.GetAll());
