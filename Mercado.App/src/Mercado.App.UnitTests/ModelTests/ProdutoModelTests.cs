@@ -90,19 +90,13 @@ namespace Mercado.App.UnitTests.ModelTests
             var validation = await _validator.ValidateAsync(instance);
             Assert.True(validation.IsValid);
         }
-        [Theory(DisplayName = "Categorias_Id não devem ser válidas!")]
-        [InlineData(0)]
-        [InlineData(-1)]
-        [InlineData(-2)]
-        [InlineData(-3)]
-        [InlineData(-4)]
-        [InlineData(-5)]
-        public async Task CategoriaIdInvalidas(int id)
+        [Fact(DisplayName = "Categorias_Id não devem ser válidas!")]        
+        public async Task CategoriaIdInvalidas()
         {
-            var instance = _builder.With(x => x.CategoriaId = id).Build();
+            var instance = _builder.With(x => x.CategoriaId = 0).Build();
             var validation = await _validator.ValidateAsync(instance);
             Assert.False(validation.IsValid);
-            Assert.Contains(validation.Errors, x => x.ErrorMessage.Contains(ProdutoErrorMessages.CategoriaInexixtente));
+            Assert.Contains(validation.Errors, x => x.ErrorMessage.Contains(ProdutoErrorMessages.CategoriaIvalida));
         }
         [Fact(DisplayName = "Categoria_Id vazia inválida!")]
         public async Task CategoriavaziaInvalida()
@@ -152,6 +146,41 @@ namespace Mercado.App.UnitTests.ModelTests
             var validation = await _validator.ValidateAsync(instance);
             Assert.False(validation.IsValid);
             Assert.Contains(validation.Errors, x => x.ErrorMessage.Contains(ProdutoErrorMessages.PrecoUnidadeVazio));
+        }
+        #endregion
+
+        #region Quantidade
+        [Theory(DisplayName = "Quantidade de medida devem ser válidas!")]
+        [InlineData(10)]
+        [InlineData(100)]
+        [InlineData(1000)]
+        [InlineData(10000)]
+        [InlineData(100000)]
+        [InlineData(55)]
+        [InlineData(1)]
+        public async Task QuantidadeEstoqueValida(double quantidade)
+        {
+            var instance = _builder.With(x => x.QuantidadeEstoque = quantidade).Build();
+            var validation = await _validator.ValidateAsync(instance);
+            Assert.True(validation.IsValid);
+        }
+
+        [Fact(DisplayName = "Quantidade Nula")]
+        public async Task QuantidadeEstoqueNula()
+        {
+            var instance = _builder.With(x => x.QuantidadeEstoque = Convert.ToDouble(null)).Build();
+            var validation = await _validator.ValidateAsync(instance);
+            Assert.False(validation.IsValid);
+            Assert.Contains(validation.Errors, x => x.ErrorMessage.Contains(ProdutoErrorMessages.QuantidadeNula));
+        }
+
+        [Fact(DisplayName = "Quantidade Minima")]
+        public async Task QuantidadeEstoqueMinima()
+        {
+            var instance = _builder.With(x => x.QuantidadeEstoque = 0.00D).Build();
+            var validation = await _validator.ValidateAsync(instance);
+            Assert.False(validation.IsValid);
+            Assert.Contains(validation.Errors, x => x.ErrorMessage.Contains(ProdutoErrorMessages.QuantidadeMinima));
         }
         #endregion
 

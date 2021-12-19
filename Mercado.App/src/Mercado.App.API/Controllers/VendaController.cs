@@ -38,7 +38,7 @@ namespace Mercado.App.API.Controllers
         {
             var venda = await _service.GetOneById(id);
             if (venda.GetType() != typeof(VendaModel))
-                NotFound("Venda não encontrado");
+                return NotFound("Venda não encontrado");
             return Ok(venda);
         }
 
@@ -64,8 +64,8 @@ namespace Mercado.App.API.Controllers
         public async Task<ActionResult<dynamic>> PostVendaModel(VendaViewModel vendaModel)
         {
             var vendaCriada = await _service.CreateVenda(vendaModel);
-            if (vendaCriada.GetType() == typeof(VendaModel))
-                return Ok(vendaCriada);
+            if (vendaCriada.GetType() == typeof(VendaModel))               
+            return Ok(vendaCriada);
 
             return BadRequest(vendaCriada);
         }

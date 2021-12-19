@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Mercado.App.API.Interfaces.Service;
+using Mercado.App.Domain.Models;
 using Mercado.App.Domain.Models.Venda;
 using Mercado.App.Domain.Models.Venda.VendaViewModels;
 using Mercado.App.Infrastructure.Data.Interfaces.Repository;
@@ -26,11 +27,16 @@ namespace Mercado.App.API.Service
         {
             var vendaMap = _mapper.Map<VendaModel>(venda);
             var validation = await new VendaModelValidation().ValidateAsync(vendaMap);
-
             if (!validation.IsValid)
                 return ErrorFunctions.MostrarErros(validation);
 
             var produto = await _repositoryProduct.GetOneById(vendaMap.IdProduto);
+            var erro = new ErrorModel();
+
+            var quantidadeEstoque = produto.QuantidadeEstoque - vendaMap.Quantidade;
+            if (quantidadeEstoque <= 0)
+                return erro.Erro= "Estoque insuficiênte";
+
             vendaMap.ValorPago = vendaMap.Quantidade * produto.PrecoUnidade;
             _repository.Create(vendaMap);
             return vendaMap;

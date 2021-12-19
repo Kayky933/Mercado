@@ -14,6 +14,7 @@ namespace Mercado.App.Domain.Models.Prateleira
         [ForeignKey("Categoria")]
         public int CategoriaId { get; set; }
         public CategoriaModel Categoria { get; set; }
+        public double QuantidadeEstoque { get; set; }
         [Column(TypeName = "decimal(12,2)")]
         public decimal PrecoUnidade { get; set; }
         public ICollection<VendaModel> Vendas { get; set; }

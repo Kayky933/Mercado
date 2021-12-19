@@ -15,6 +15,9 @@ namespace Mercado.App.Validation.ValidationProject.ValidationModels
             RuleFor(x => x.CategoriaId).NotEmpty().WithMessage(ProdutoErrorMessages.CategoriaIvalida)
                 .Must(x => x.GetType() == typeof(int)).WithMessage(ProdutoErrorMessages.CategoriaInexixtente);
 
+            RuleFor(x => x.QuantidadeEstoque).NotEmpty().WithMessage(ProdutoErrorMessages.QuantidadeNula)
+                .GreaterThan(0).WithMessage(ProdutoErrorMessages.QuantidadeMinima);
+
             RuleFor(x => x.PrecoUnidade).NotEmpty().WithMessage(ProdutoErrorMessages.PrecoUnidadeVazio)
                 .GreaterThanOrEqualTo(0.99M).WithMessage(ProdutoErrorMessages.PrecoMinimo)
                 .Must(x => x.GetType() == typeof(decimal)).WithMessage(ProdutoErrorMessages.PrecoUnidadeInvalido);

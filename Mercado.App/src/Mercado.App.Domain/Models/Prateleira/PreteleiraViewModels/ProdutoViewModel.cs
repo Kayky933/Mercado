@@ -4,6 +4,7 @@
     {
         public string Descricao { get; set; }
         public int CategoriaId { get; set; }
+        public double QuantidadeEstoque { get; set; }
         public decimal PrecoUnidade { get; set; }
         public UnidadeMedidaEnum UnidadeMedida { get; set; }
     }

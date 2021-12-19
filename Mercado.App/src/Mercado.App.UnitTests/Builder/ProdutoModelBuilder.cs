@@ -11,7 +11,8 @@ namespace Mercado.App.UnitTests.Builder
                 .With(x => x.Descricao = "ABC")
                 .With(x => x.CategoriaId = 5)
                 .With(x => x.PrecoUnidade = 1.99M)
-                .With(x => x.UnidadeMedida = UnidadeMedidaEnum.grama);
+                .With(x => x.UnidadeMedida = UnidadeMedidaEnum.grama)
+                .With(x=>x.QuantidadeEstoque=100);
         }
     }
 }
